@@ -1,0 +1,131 @@
+//model
+package spep.java;
+import java.util.*;
+import java.io.Serializable;
+public class Employee implements Comparable<Employee>,Serializable {
+private int id;
+private String name;
+private int salary;
+/*public boolean equals(Object obj) {
+	System.out.println("Equals Called for"+this.name);
+	Employee e =(Employee)obj;
+	boolean chkId=this.id==e.id;
+	boolean chkName = this.name.equals(e.name);
+	return chkId && chkName;
+}*/
+public int compareTo(Employee o) {
+	return(o.getSalary()-this.getSalary());
+}
+public int getId() {
+	return id;
+}
+public void setId(int id) {
+	this.id = id;
+}
+public String getName() {
+	return name;
+}
+public void setName(String name) {
+	this.name = name;
+}
+public int getSalary() {
+	return salary;
+}
+public void setSalary(int salary) {
+	this.salary = salary;
+}
+public Employee() {
+	super();
+	// TODO Auto-generated constructor stub
+}
+public Employee(int id, String name, int salary) {
+	super();
+	this.id = id;
+	this.name = name;
+	this.salary = salary;
+}
+public String toString()
+{
+  return "Employee [id=" + id + " ,name=" + name +", salary=" + salary +"]";
+}
+//view
+package spep.java;
+import java.util.*;
+public class MyCompanyMain {
+  Scanner sc= new Scanner(System.in);
+  EmployeeList obj = new EmployeeList();
+
+  public static void main(String args[])
+  {
+    MyCompanyMain hr = new MyCompanyMain();
+
+    while(true)
+    {
+      System.out.println("1. Add Employee");
+      System.out.println("2. Search Employee");
+      System.out.println("0. EXIT");
+      System.out.println("Enter choice :");
+      int choice  = Integer.parseInt(hr.sc.nextLine());
+
+      switch(choice)
+      {
+        case 1:
+               hr.addEmployee();
+               break;
+        case 2:
+	       hr.searchEmployee();
+	       break;
+	case 3:
+	       System.exit(0);
+               break;     
+      }// end switch
+    }//end true
+  }//end main
+
+   public void addEmployee()
+   {
+     System.out.println("Enter Employee Id");
+     int id = Integer.parseInt(sc.nextLine());
+     
+     System.out.println("Enter Employee name");
+     String name = sc.nextLine();
+
+     System.out.println("Enter Employee salary");
+     int salary = Integer.parseInt(sc.nextLine());
+
+     Employee e  = new Employee(id, name, salary);
+     obj.addEmployee(e);
+   }
+
+   public void searchEmployee()
+   {
+      System.out.println("Enter Employee ID to search");
+      int id = Integer.parseInt(sc.nextLine());
+      Employee e = obj.getEmployeeById(id);
+
+      System.out.println(e);
+   }
+}
+//controller
+package spep.java;
+import java.util.ArrayList;
+import java.util.List;
+public class EmployeeList {
+ List<Employee> emplist= new ArrayList<>();
+public void addEmployee(Employee e)
+	{
+		emplist.add(e);
+	}
+	public Employee getEmployeeById(int id)
+	{
+		Employee e=null;
+		for(Employee employee : emplist )
+		{
+			if(employee.getId()==id)
+			{
+				e=employee;
+				break;
+			}
+		}
+		return e;
+	}
